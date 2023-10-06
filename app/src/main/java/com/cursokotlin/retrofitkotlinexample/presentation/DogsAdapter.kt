@@ -1,10 +1,12 @@
-package com.cursokotlin.retrofitkotlinexample
+package com.cursokotlin.retrofitkotlinexample.presentation
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cursokotlin.retrofitkotlinexample.R
 import com.cursokotlin.retrofitkotlinexample.databinding.ItemDogBinding
+import com.cursokotlin.retrofitkotlinexample.presentation.common.util.fromUrl
 
 /**
  * Created by aristidesguimeraorozco on 5/5/18.

@@ -1,6 +1,5 @@
-package com.cursokotlin.retrofitkotlinexample
+package com.cursokotlin.retrofitkotlinexample.presentation.common.util
 
-import android.media.Image
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 

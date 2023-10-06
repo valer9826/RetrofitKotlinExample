@@ -1,15 +1,21 @@
-package com.cursokotlin.retrofitkotlinexample
+package com.cursokotlin.retrofitkotlinexample.presentation
 
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cursokotlin.retrofitkotlinexample.presentation.common.interceptor.HeaderInterceptor
+import com.cursokotlin.retrofitkotlinexample.data.APIService
+import com.cursokotlin.retrofitkotlinexample.data.response.DogsResponse
 import com.cursokotlin.retrofitkotlinexample.databinding.ActivityMainBinding
+import com.cursokotlin.retrofitkotlinexample.presentation.common.interceptor.InterceptorExample
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -45,11 +51,18 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
             .build()
     }
 
-    private fun getClient(): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(HeaderInterceptor())
-            .build()
+    private fun getClient(): OkHttpClient {
 
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.HEADERS
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        return OkHttpClient.Builder()
+            .addInterceptor(InterceptorExample())
+            .addInterceptor(loggingInterceptor)
+            .build()
+    }
 
     override fun onQueryTextSubmit(query: String): Boolean {
         searchByName(query.toLowerCase())
@@ -62,7 +75,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
                 getRetrofit().create(APIService::class.java).getCharacterByName("$query/images")
                     .execute()
             val puppies = call.body() as DogsResponse?
-            runOnUiThread {
+            withContext(Dispatchers.Main) {
                 if (puppies?.status == "success") {
                     initCharacter(puppies)
                 } else {

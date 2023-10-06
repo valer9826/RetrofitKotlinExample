@@ -1,4 +1,4 @@
-package com.cursokotlin.retrofitkotlinexample
+package com.cursokotlin.retrofitkotlinexample.presentation.common.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response

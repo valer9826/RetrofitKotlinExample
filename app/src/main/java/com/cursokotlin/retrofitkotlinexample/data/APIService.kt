@@ -1,8 +1,7 @@
-package com.cursokotlin.retrofitkotlinexample
+package com.cursokotlin.retrofitkotlinexample.data
 
-import okhttp3.MediaType
+import com.cursokotlin.retrofitkotlinexample.data.response.DogsResponse
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
